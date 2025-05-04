@@ -1,8 +1,8 @@
+// vite.config.js
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  base: "/shoppingreact",
-  plugins: [react()],
+    plugins: [react()],
+    base: '/e-plantShopping/', // ← название твоего репозитория
 })
