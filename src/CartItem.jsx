@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, updateQuantity } from './CartSlice';
 import './CartItem.css';
@@ -6,30 +7,45 @@ import './CartItem.css';
 const CartItem = ({ onContinueShopping }) => {
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
-
+  const [total, setTotal] = useState(0)
+  
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
- 
+    
+    
+
+    cart.forEach(element => {
+      // setTotal(total+=element.quantity * parseFloat(element.cost.substring(1)))
+      // setTotal(total+=(element.quantity * element.cost))
+    })
+    return total
   };
 
   const handleContinueShopping = (e) => {
-   
+    onContinueShopping(e)
   };
 
+  const handleCheckoutShopping = (e) => {
+    alert('Functionality to be added for future reference');
+  };
 
 
   const handleIncrement = (item) => {
+    dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
   };
 
   const handleDecrement = (item) => {
-   
+    dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
   };
 
   const handleRemove = (item) => {
+    dispatch(removeItem(item.name))
   };
 
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
+    return item.quantity * parseFloat(item.cost.substring(1))
+    // console.log(item.cost)
   };
 
   return (
@@ -37,7 +53,7 @@ const CartItem = ({ onContinueShopping }) => {
       <h2 style={{ color: 'black' }}>Total Cart Amount: ${calculateTotalAmount()}</h2>
       <div>
         {cart.map(item => (
-          <div className="cart-item" key={item.name}>
+          <div className="cart-item" key={item.name}> 
             <img className="cart-item-image" src={item.image} alt={item.name} />
             <div className="cart-item-details">
               <div className="cart-item-name">{item.name}</div>
